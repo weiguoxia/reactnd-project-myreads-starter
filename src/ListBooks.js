@@ -10,6 +10,8 @@ class ListBooks extends Component {
     getAll().then(books =>
       this.setState({
         books: books
+      },()=> {
+        this.props.updateMyBooks(books);
       })
     );
   };
@@ -54,6 +56,8 @@ class ListBooks extends Component {
                         key={book.id}
                         book={book}
                         updateBook={this.updateBook}
+                        shelf={book.shelf}
+
                       />
                     ))}
                 </ol>
@@ -70,6 +74,7 @@ class ListBooks extends Component {
                         key={book.id}
                         book={book}
                         updateBook={this.updateBook}
+                        shelf={book.shelf}
                       />
                     ))}
                 </ol>
@@ -86,6 +91,8 @@ class ListBooks extends Component {
                         key={book.id}
                         book={book}
                         updateBook={this.updateBook}
+                        shelf={book.shelf}
+
                       />
                     ))}
                 </ol>

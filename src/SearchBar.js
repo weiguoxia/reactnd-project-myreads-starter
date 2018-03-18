@@ -10,15 +10,27 @@ class SearchBar extends Component {
   };
 
   changeHandle = event => {
-    this.setState({
-      query: event.target.value
-    });
-    this.state.query &&
-      search(this.state.query).then(books => {
-        this.setState({
-          books: books
-        });
-      });
+    this.setState(
+      {
+        query: event.target.value
+      },
+      () => {
+        this.state.query &&
+          search(this.state.query).then(books => {
+
+            this.setState({
+              books: books
+            });
+
+
+
+          });
+        !this.state.query &&
+          this.setState({
+            books: []
+          });
+      }
+    );
   };
 
   updateBook = (book, shelf) => {
@@ -45,9 +57,12 @@ class SearchBar extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.books.map(book => (
-              <Book key={book.id} book={book} updateBook={this.updateBook} />
-            ))}
+            {Array.isArray(this.state.books) &&
+              this.state.books.map(
+              book => (
+                <Book key={book.id} book={book} updateBook={this.updateBook} shelf={this.props.myBooks.hasOwnProperty(book.id)?this.props.myBooks[book.id]:undefined} />
+              )
+              )}
           </ol>
         </div>
       </div>
