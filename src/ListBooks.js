@@ -8,26 +8,34 @@ class ListBooks extends Component {
 
   componentDidMount = () => {
     getAll().then(books =>
-      this.setState({
-        books: books
-      },()=> {
-        this.props.updateMyBooks(books);
-      })
+      this.setState(
+        {
+          books: books
+        },
+        () => {
+          this.props.updateMyBooks(books);
+        }
+      )
     );
   };
 
   updateBook = (book, shelf) => {
     update(book, shelf).then(res => {
-      this.setState(state => ({
-        books: state.books.map(b => {
-          if (b.id !== book.id) {
-            return b;
-          } else {
-            b.shelf = shelf;
-            return b;
-          }
-        })
-      }));
+      this.setState(
+        state => ({
+          books: state.books.map(b => {
+            if (b.id !== book.id) {
+              return b;
+            } else {
+              b.shelf = shelf;
+              return b;
+            }
+          })
+        }),
+        () => {
+          this.props.updateMyBooks(this.state.books);
+        }
+      );
     });
   };
 
@@ -57,7 +65,6 @@ class ListBooks extends Component {
                         book={book}
                         updateBook={this.updateBook}
                         shelf={book.shelf}
-
                       />
                     ))}
                 </ol>
@@ -92,7 +99,6 @@ class ListBooks extends Component {
                         book={book}
                         updateBook={this.updateBook}
                         shelf={book.shelf}
-
                       />
                     ))}
                 </ol>

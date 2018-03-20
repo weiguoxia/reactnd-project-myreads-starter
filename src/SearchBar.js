@@ -17,13 +17,9 @@ class SearchBar extends Component {
       () => {
         this.state.query &&
           search(this.state.query).then(books => {
-
             this.setState({
               books: books
             });
-
-
-
           });
         !this.state.query &&
           this.setState({
@@ -58,11 +54,18 @@ class SearchBar extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {Array.isArray(this.state.books) &&
-              this.state.books.map(
-              book => (
-                <Book key={book.id} book={book} updateBook={this.updateBook} shelf={this.props.myBooks.hasOwnProperty(book.id)?this.props.myBooks[book.id]:undefined} />
-              )
-              )}
+              this.state.books.map(book => (
+                <Book
+                  key={book.id}
+                  book={book}
+                  updateBook={this.updateBook}
+                  shelf={
+                    this.props.myBooks.hasOwnProperty(book.id)
+                      ? this.props.myBooks[book.id]
+                      : undefined
+                  }
+                />
+              ))}
           </ol>
         </div>
       </div>
